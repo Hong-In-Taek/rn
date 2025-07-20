@@ -1,0 +1,225 @@
+/* DiffViewer styles */
+.diff-line {
+  position: relative;
+  min-height: 24px;
+}
+.diff-line--commented {
+  background: #fff8b3;
+}
+.diff-comment-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #007bff;
+  font-weight: 500;
+  font-size: 18px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 50%;
+  padding: 2px 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+.diff-comment-input {
+  margin-top: 8px;
+  margin-left: 0;
+  background: #f6f8fa;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  padding: 12px;
+  max-width: 480px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.diff-comment-box {
+  margin-top: 8px;
+  margin-left: 0;
+  background: #fff8b3;
+  border: 1px solid #ffe066;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #6d4c00;
+  max-width: 480px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+/* DiffStats styles */
+.diff-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.diff-stats__add {
+  background: #e6f4ea;
+  color: #218838;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.diff-stats__del {
+  background: #fbeaea;
+  color: #c82333;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+/* CommentInput styles */
+.diff-comment-input-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.diff-comment-input-row input[type="text"] {
+  flex: 1;
+}
+.diff-comment-cancel-btn {
+  color: #888;
+}
+
+/* FileTree styles */
+.filetree-aside {
+  width: 220px;
+  background: #fff;
+  border-right: 1px solid #e5e5e5;
+  padding: 24px 0 24px 0;
+  box-shadow: 1px 0 0 #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.filetree-title {
+  font-weight: 700;
+  font-size: 16px;
+  padding: 0 24px 16px 24px;
+  color: #444;
+}
+.filetree-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+.filetree-file {
+  cursor: pointer;
+  padding: 6px 24px 6px 36px;
+  border-left: 3px solid transparent;
+  color: #666;
+  font-weight: 400;
+  border-radius: 0;
+  margin-bottom: 2px;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  background: none;
+}
+.filetree-file--selected {
+  background: #f5f5f8;
+  border-left: 3px solid #6c63ff;
+  color: #222;
+  font-weight: 600;
+}
+.filetree-file__add {
+  color: #218838;
+  font-weight: 600;
+  font-size: 12px;
+  margin-left: 6px;
+}
+.filetree-file__del {
+  color: #c82333;
+  font-weight: 600;
+  font-size: 12px;
+  margin-left: 2px;
+}
+.filetree-folder {
+  padding: 6px 24px 6px 16px;
+  font-weight: 700;
+  color: #444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+.filetree-folder__arrow {
+  margin-right: 6px;
+}
+.filetree-folder__children {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* App.js main layout styles */
+.app-root {
+  display: flex;
+  height: 100vh;
+  background: #f5f5f8;
+}
+.app-main {
+  flex: 1;
+  padding: 32px 0;
+  background: #f5f5f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+}
+.app-main__container {
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* Diff panel styles */
+.diff-panel {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px #0001;
+  margin-bottom: 28px;
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+}
+.diff-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px 12px 28px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafbfc;
+}
+.diff-panel__title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 16px;
+}
+.diff-panel__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.diff-panel__collapse-btn,
+.diff-panel__more-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #888;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.diff-panel__body {
+  padding: 24px 28px 24px 28px;
+} 
