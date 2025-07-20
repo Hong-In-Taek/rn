@@ -1,0 +1,435 @@
+.App {
+  text-align: left;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.App-header {
+  background-color: #ffffff;
+  padding: 16px 24px;
+  color: #333;
+  margin-bottom: 0;
+  border-bottom: 1px solid #e1e5e9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.App-header h1::before {
+  content: "✏️";
+  font-size: 1.2rem;
+}
+
+.App-header h1::after {
+  content: "▼";
+  font-size: 0.8rem;
+  color: #666;
+  margin-left: 8px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.header-actions button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.header-actions button:hover {
+  background-color: #f0f0f0;
+}
+
+.App-main {
+  padding: 24px;
+  max-width: none;
+  margin: 0;
+  overflow-x: auto;
+}
+
+/* 칸반 보드 스타일 */
+.kanban-board {
+  display: flex;
+  gap: 16px;
+  padding: 0;
+  min-height: calc(100vh - 120px);
+  overflow-x: auto;
+}
+
+.kanban-column {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  min-width: 320px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.column-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 16px;
+  border-radius: 8px 8px 0 0;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.kanban-column:nth-child(1) .column-header {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.kanban-column:nth-child(2) .column-header {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.kanban-column:nth-child(3) .column-header {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+}
+
+.kanban-column:nth-child(4) .column-header {
+  background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);
+}
+
+.kanban-column:nth-child(5) .column-header {
+  background: linear-gradient(135deg, #48cae4 0%, #023e8a 100%);
+}
+
+.column-header h3 {
+  margin: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.column-header h3:hover {
+  opacity: 0.8;
+}
+
+.column-header input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+
+.column-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.column-count .total {
+  font-weight: bold;
+}
+
+.column-content {
+  flex: 1;
+  padding: 16px;
+  min-height: 400px;
+  background-color: #f5f5f5;
+  border-radius: 0 0 8px 8px;
+}
+
+.kanban-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid #e1e5e9;
+  position: relative;
+}
+
+.kanban-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.kanban-card.dragging {
+  opacity: 0.5;
+  transform: rotate(3deg);
+}
+
+.kanban-card h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.4;
+}
+
+.kanban-card p {
+  margin: 0 0 12px 0;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.card-avatar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.card-avatar::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.card-preview {
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 6px;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-preview::before {
+  content: "💻";
+  font-size: 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  font-size: 11px;
+  color: #999;
+}
+
+.card-date {
+  font-weight: 500;
+}
+
+.card-stats {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.card-stat {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.card-tags {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.card-tag {
+  background-color: #667eea;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.card-status {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+}
+
+.card-edit {
+  padding: 12px;
+}
+
+.card-edit input,
+.card-edit textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-family: inherit;
+}
+
+.card-edit textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.card-actions button {
+  background-color: #667eea;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  flex: 1;
+  transition: background-color 0.2s;
+}
+
+.card-actions button:last-child {
+  background-color: #dc3545;
+}
+
+.card-actions button:hover {
+  opacity: 0.8;
+}
+
+.add-card-btn {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  margin: 8px 0;
+  padding: 16px;
+  text-align: center;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.add-card-btn:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: #999;
+  color: #333;
+}
+
+.add-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
+}
+
+.add-column button {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+  min-height: 500px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-column button:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: #999;
+  color: #333;
+}
+
+/* 드래그 앤 드롭 스타일 */
+.column-content.dragging-over {
+  background-color: rgba(102, 126, 234, 0.1);
+  border: 2px dashed #667eea;
+  border-radius: 8px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .App-main {
+    padding: 16px;
+  }
+  
+  .kanban-board {
+    gap: 12px;
+  }
+  
+  .kanban-column {
+    min-width: 280px;
+    max-width: 280px;
+  }
+  
+  .add-column {
+    min-width: 280px;
+  }
+  
+  .add-column button {
+    min-height: 400px;
+  }
+} 
