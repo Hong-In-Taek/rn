@@ -44,21 +44,17 @@ const App = () => {
       <FileTree diffs={diffs} selectedPath={selectedPath} onSelect={handleSelect} />
       <div className="app-main">
         <div className="app-main__container">
-          {diffs.map(file => {
-            const stats = countDiffStats(file.diff);
-            const isCollapsed = collapsed[file.new_path];
-            return (
-              <DiffPanel
-                key={file.new_path}
-                file={file}
-                stats={stats}
-                isCollapsed={isCollapsed}
-                onToggleCollapse={() => setCollapsed(c => ({ ...c, [file.new_path]: !isCollapsed }))}
-                comments={comments}
-                onAddComment={handleAddComment}
-              />
-            );
-          })}
+          {selectedPath && diffMap[selectedPath] && (
+            <DiffPanel
+              key={selectedPath}
+              file={diffMap[selectedPath]}
+              stats={countDiffStats(diffMap[selectedPath].diff)}
+              isCollapsed={collapsed[selectedPath]}
+              onToggleCollapse={() => setCollapsed(c => ({ ...c, [selectedPath]: !c[selectedPath] }))}
+              comments={comments}
+              onAddComment={handleAddComment}
+            />
+          )}
         </div>
       </div>
     </div>

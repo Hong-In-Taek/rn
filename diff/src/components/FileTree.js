@@ -28,11 +28,27 @@ const countStats = (diffText) => {
   return { additions, deletions };
 };
 
-const TreeNode = ({ name, node, path, selectedPath, onSelect, openFolders, setOpenFolders, depth }) => {
+const getTreePrefix = (depth, isLast, parentLastArr) => {
+  if (depth === 0) return '';
+  let prefix = '';
+  for (let i = 0; i < depth - 1; i++) {
+    prefix += parentLastArr[i] ? '    ' : '|   ';
+  }
+  prefix += isLast ? '└── ' : '|-- ';
+  return prefix;
+};
+
+const TreeNode = ({ name, node, path, selectedPath, onSelect, openFolders, setOpenFolders, depth, parentLastArr = [] }) => {
   const isFile = !!node.__file;
   const fullPath = path ? path + '/' + name : name;
   const isOpen = openFolders[fullPath] || false;
   const indent = 16 + (depth || 0) * 16;
+
+  // Determine if this node is the last among siblings
+  const siblings = path ? Object.keys(node.__file ? {} : node).filter(k => k !== '__file').sort() : [];
+  const isLast = parentLastArr.length > 0 ? parentLastArr[parentLastArr.length - 1] : false;
+
+  const prefix = getTreePrefix(depth || 0, isLast, parentLastArr);
 
   if (isFile) {
     const stats = countStats(node.__file.diff);
@@ -41,12 +57,12 @@ const TreeNode = ({ name, node, path, selectedPath, onSelect, openFolders, setOp
         className={
           'filetree-file' + (selectedPath === fullPath ? ' filetree-file--selected' : '')
         }
-        style={{ padding: `6px 24px 6px ${indent + 20}px` }}
+        style={{ padding: `6px 24px 6px ${indent + 20}px`, fontFamily: 'monospace' }}
         onClick={() => onSelect(fullPath)}
         onMouseOver={e => e.currentTarget.style.background = '#f0f0f3'}
         onMouseOut={e => e.currentTarget.style.background = selectedPath === fullPath ? '#f5f5f8' : 'transparent'}
       >
-        <span style={{ marginRight: 6 }}>📄</span>
+        <span style={{ marginRight: 6 }}>{prefix}📄</span>
         <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
         <span className="filetree-file__add">+{stats.additions}</span>
         <span className="filetree-file__del">-{stats.deletions}</span>
@@ -60,15 +76,15 @@ const TreeNode = ({ name, node, path, selectedPath, onSelect, openFolders, setOp
     <li>
       <div
         className="filetree-folder"
-        style={{ padding: `6px 24px 6px ${indent}px` }}
+        style={{ padding: `6px 24px 6px ${indent}px`, fontFamily: 'monospace' }}
         onClick={() => setOpenFolders(f => ({ ...f, [fullPath]: !isOpen }))}
       >
-        <span className="filetree-folder__icon" style={{ marginRight: 6 }}>{isOpen ? '📂' : '📁'}</span>
+        <span className="filetree-folder__icon" style={{ marginRight: 6 }}>{getTreePrefix(depth || 0, isLast, parentLastArr)}{isOpen ? '📂' : '📁'}</span>
         <span>{name}</span>
       </div>
       {isOpen && (
         <ul className="filetree-folder__children">
-          {children.map(child => (
+          {children.map((child, idx) => (
             <TreeNode
               key={child}
               name={child}
@@ -79,6 +95,7 @@ const TreeNode = ({ name, node, path, selectedPath, onSelect, openFolders, setOp
               openFolders={openFolders}
               setOpenFolders={setOpenFolders}
               depth={(depth || 0) + 1}
+              parentLastArr={[...(parentLastArr || []), idx === children.length - 1]}
             />
           ))}
         </ul>
