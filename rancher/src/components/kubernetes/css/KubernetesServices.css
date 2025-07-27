@@ -1,0 +1,341 @@
+/* Kubernetes Services */
+.kubernetes-services {
+  padding: 20px;
+  background: #1a1f2e;
+  min-height: 100vh;
+}
+
+.services-header {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.services-header h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Search Section */
+.search-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 10px 10px 35px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.namespace-filter-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.namespace-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.namespace-filter label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+}
+
+.namespace-filter select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.namespace-filter select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.options {
+  display: flex;
+  gap: 10px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-btn:hover {
+  background: #f8f9fa;
+  border-color: #007bff;
+}
+
+.option-icon {
+  font-size: 12px;
+}
+
+/* Table */
+.table-container {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.services-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.services-table th {
+  background: #f8f9fa;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 14px;
+  position: relative;
+}
+
+.services-table th:first-child {
+  width: 40px;
+}
+
+.services-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #dee2e6;
+  font-size: 14px;
+  color: #333;
+  background: white;
+}
+
+.services-table tr {
+  background: white;
+}
+
+.services-table tr:hover {
+  background: #f8f9fa;
+}
+
+.sort-icon, .filter-icon {
+  margin-left: 8px;
+  font-size: 12px;
+  color: #6c757d;
+  cursor: pointer;
+}
+
+.sort-icon:hover, .filter-icon:hover {
+  color: #007bff;
+}
+
+/* Type Badge */
+.type-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.type-badge.clusterip {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.type-badge.loadbalancer {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.type-badge.nodeport {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.type-badge.externalname {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.action-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background: #f8f9fa;
+  border-color: #007bff;
+  color: #007bff;
+}
+
+/* Service Name */
+.service-name {
+  font-weight: 500;
+  color: #007bff;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+}
+
+.service-name:hover {
+  text-decoration: underline;
+}
+
+/* Cluster IP */
+.cluster-ip {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #333;
+}
+
+/* External IP */
+.external-ip {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #495057;
+}
+
+/* Ports */
+.ports {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #495057;
+  background: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Age */
+.age {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #495057;
+}
+
+/* Namespace */
+.namespace {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #6c757d;
+  background: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.empty-state p {
+  margin: 0 0 20px 0;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .kubernetes-services {
+    padding: 10px;
+  }
+
+  .services-header {
+    padding: 15px;
+  }
+
+  .search-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-box {
+    max-width: none;
+  }
+
+  .services-table {
+    font-size: 12px;
+  }
+
+  .services-table th,
+  .services-table td {
+    padding: 8px 10px;
+  }
+} 

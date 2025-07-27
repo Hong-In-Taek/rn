@@ -1,0 +1,136 @@
+/* Kubernetes Sidebar */
+.kubernetes-sidebar {
+  padding: 0;
+}
+
+.sidebar-section {
+  margin-bottom: 25px;
+}
+
+.sidebar-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-header {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 12px 0;
+  padding: 0 20px 8px 20px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.section-header:hover {
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.section-title {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.expand-icon {
+  font-size: 10px;
+  transition: transform 0.3s ease;
+  color: #64748b;
+}
+
+.expand-icon.expanded {
+  transform: rotate(180deg);
+  color: #3b82f6;
+}
+
+.section-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.section-items.expanded {
+  max-height: 200px;
+  opacity: 1;
+}
+
+.section-items.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.sidebar-item {
+  background: transparent;
+  border: none;
+  color: #e2e8f0;
+  padding: 10px 20px 10px 35px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 0;
+}
+
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  transform: translateX(5px);
+}
+
+.sidebar-item:active {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(3px);
+}
+
+.sidebar-item::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  background: #64748b;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.sidebar-item:hover::before {
+  background: #3b82f6;
+  transform: translateY(-50%) scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section-header {
+    font-size: 11px;
+    padding: 0 15px 6px 15px;
+  }
+
+  .sidebar-item {
+    padding: 8px 15px 8px 25px;
+    font-size: 13px;
+  }
+
+  .sidebar-item::before {
+    left: 15px;
+  }
+} 

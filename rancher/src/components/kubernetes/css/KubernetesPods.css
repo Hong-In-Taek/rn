@@ -1,0 +1,367 @@
+/* Kubernetes Pods */
+.kubernetes-pods {
+  padding: 20px;
+  background: #1a1f2e;
+  min-height: 100vh;
+}
+
+.pods-header {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pods-header h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Search Section */
+.search-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 10px 10px 35px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.namespace-filter-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.namespace-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.namespace-filter label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+}
+
+.namespace-filter select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.namespace-filter select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.options {
+  display: flex;
+  gap: 10px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-btn:hover {
+  background: #f8f9fa;
+  border-color: #007bff;
+}
+
+.option-icon {
+  font-size: 12px;
+}
+
+/* Table */
+.table-container {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pods-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.pods-table th {
+  background: #f8f9fa;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 14px;
+  position: relative;
+}
+
+.pods-table th:first-child {
+  width: 40px;
+}
+
+.pods-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #dee2e6;
+  font-size: 14px;
+  color: #333;
+  background: white;
+}
+
+.pods-table tr {
+  background: white;
+}
+
+.pods-table tr:hover {
+  background: #f8f9fa;
+}
+
+.sort-icon, .filter-icon {
+  margin-left: 8px;
+  font-size: 12px;
+  color: #6c757d;
+  cursor: pointer;
+}
+
+.sort-icon:hover, .filter-icon:hover {
+  color: #007bff;
+}
+
+/* Status Badge */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-badge.running {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.crashloopbackoff {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.failed {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.succeeded {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-badge.unknown {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.action-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background: #f8f9fa;
+  border-color: #007bff;
+  color: #007bff;
+}
+
+/* Pod Name */
+.pod-name {
+  font-weight: 500;
+  color: #007bff;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+}
+
+.pod-name:hover {
+  text-decoration: underline;
+}
+
+/* Ready Count */
+.ready-count {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #495057;
+  font-weight: 500;
+}
+
+/* Restart Count */
+.restart-count {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #495057;
+  font-weight: 500;
+}
+
+.restart-count.warning {
+  color: #856404;
+  font-weight: 600;
+}
+
+/* Age */
+.age {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #495057;
+}
+
+/* IP Address */
+.ip-address {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #333;
+}
+
+/* Node Name */
+.node-name {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.node-name:hover {
+  text-decoration: underline;
+}
+
+/* Namespace */
+.namespace {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #6c757d;
+  background: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.empty-state p {
+  margin: 0 0 20px 0;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .kubernetes-pods {
+    padding: 10px;
+  }
+
+  .pods-header {
+    padding: 15px;
+  }
+
+  .search-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-box {
+    max-width: none;
+  }
+
+  .pods-table {
+    font-size: 12px;
+  }
+
+  .pods-table th,
+  .pods-table td {
+    padding: 8px 10px;
+  }
+} 

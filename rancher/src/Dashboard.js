@@ -1,4 +1,17 @@
 import React, { useState } from 'react';
+import DockerDashboard from './components/docker/DockerDashboard';
+import DockerContainers from './components/docker/DockerContainers';
+import DockerImages from './components/docker/DockerImages';
+import DockerVolumes from './components/docker/DockerVolumes';
+import KubernetesSidebar from './components/kubernetes/KubernetesSidebar';
+import KubernetesNode from './components/kubernetes/KubernetesNode';
+import KubernetesNamespace from './components/kubernetes/KubernetesNamespace';
+import KubernetesEvent from './components/kubernetes/KubernetesEvent';
+import KubernetesPods from './components/kubernetes/KubernetesPods';
+import KubernetesDeployments from './components/kubernetes/KubernetesDeployments';
+import KubernetesServices from './components/kubernetes/KubernetesServices';
+import KubernetesConfigMaps from './components/kubernetes/KubernetesConfigMaps';
+import KubernetesSecrets from './components/kubernetes/KubernetesSecrets';
 import './Dashboard.css';
 
 const Dashboard = ({ onLogout }) => {
@@ -26,26 +39,33 @@ const Dashboard = ({ onLogout }) => {
     }
   ];
 
+  // 새로운 메뉴 구조
   const menuItems = {
     home: {
       icon: '🏠',
       label: 'Home',
-      subItems: []
-    },
-    cluster: {
-      icon: '🏢',
-      label: 'cluster',
-      subItems: ['namespace', 'node', 'event']
+      type: 'main'
     },
     docker: {
       icon: '🐳',
       label: 'Docker',
-      subItems: ['containers', 'images', 'volumes', 'networks']
+      type: 'cluster',
+      subItems: ['dashboard', 'containers', 'images', 'volumes', 'networks']
     },
     kubernetes: {
       icon: '⚓',
-      label: 'workload',
-      subItems: ['pods', 'deployments', 'services', 'configmaps', 'secrets']
+      label: 'Kubernetes',
+      type: 'cluster',
+      subMenus: {
+        cluster: {
+          label: 'Cluster',
+          subItems: ['node', 'namespace', 'event']
+        },
+        workload: {
+          label: 'Workload',
+          subItems: ['pods', 'deployments', 'services', 'configmaps', 'secrets']
+        }
+      }
     }
   };
 
@@ -56,8 +76,21 @@ const Dashboard = ({ onLogout }) => {
       return;
     }
     
+    if (menuKey === 'docker') {
+      setActiveTab('docker');
+      setRightSidebar('docker');
+      return;
+    }
+    
+    if (menuKey === 'kubernetes') {
+      setActiveTab('kubernetes');
+      setRightSidebar('kubernetes');
+      return;
+    }
+  };
+
+  const handleSidebarMenuClick = (menuKey) => {
     setActiveTab(menuKey);
-    setRightSidebar(menuKey);
   };
 
   const renderTable = () => (
@@ -95,6 +128,78 @@ const Dashboard = ({ onLogout }) => {
     </div>
   );
 
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'docker-dashboard':
+        return <DockerDashboard />;
+      case 'docker-containers':
+        return <DockerContainers />;
+      case 'docker-images':
+        return <DockerImages />;
+      case 'docker-volumes':
+        return <DockerVolumes />;
+      case 'docker-networks':
+        return <div>Docker Networks - Coming Soon</div>;
+      case 'kubernetes-cluster-node':
+        return <KubernetesNode />;
+      case 'kubernetes-cluster-namespace':
+        return <KubernetesNamespace />;
+      case 'kubernetes-cluster-event':
+        return <KubernetesEvent />;
+      case 'kubernetes-workload-pods':
+        return <KubernetesPods />;
+      case 'kubernetes-workload-deployments':
+        return <KubernetesDeployments />;
+      case 'kubernetes-workload-services':
+        return <KubernetesServices />;
+      case 'kubernetes-workload-configmaps':
+        return <KubernetesConfigMaps />;
+      case 'kubernetes-workload-secrets':
+        return <KubernetesSecrets />;
+      default:
+        return renderTable();
+    }
+  };
+
+  const getContentTitle = () => {
+    switch (activeTab) {
+      case 'home':
+        return 'Dashboard';
+      case 'docker-dashboard':
+        return 'Docker Dashboard';
+      case 'docker-containers':
+        return 'Docker Containers';
+      case 'docker-images':
+        return 'Docker Images';
+      case 'docker-volumes':
+        return 'Docker Volumes';
+      case 'docker-networks':
+        return 'Docker Networks';
+      case 'docker':
+        return 'Docker';
+      case 'kubernetes':
+        return 'Kubernetes Cluster';
+      case 'kubernetes-cluster-node':
+        return 'Kubernetes Nodes';
+      case 'kubernetes-cluster-namespace':
+        return 'Kubernetes Namespaces';
+      case 'kubernetes-cluster-event':
+        return 'Kubernetes Events';
+      case 'kubernetes-workload-pods':
+        return 'Kubernetes Pods';
+      case 'kubernetes-workload-deployments':
+        return 'Kubernetes Deployments';
+      case 'kubernetes-workload-services':
+        return 'Kubernetes Services';
+      case 'kubernetes-workload-configmaps':
+        return 'Kubernetes ConfigMaps';
+      case 'kubernetes-workload-secrets':
+        return 'Kubernetes Secrets';
+      default:
+        return activeTab;
+    }
+  };
+
   return (
     <div className="dashboard">
       {/* Header */}
@@ -116,6 +221,7 @@ const Dashboard = ({ onLogout }) => {
                 key={key}
                 className={`nav-item ${activeTab === key ? 'active' : ''}`}
                 onClick={() => handleMenuClick(key)}
+                title={menu.label}
               >
                 <div className="nav-icon">{menu.icon}</div>
               </button>
@@ -127,7 +233,12 @@ const Dashboard = ({ onLogout }) => {
         {rightSidebar && (
           <aside className="right-sidebar">
             <div className="right-sidebar-header">
-              <h3>{menuItems[rightSidebar].label}</h3>
+              <h3>
+                {rightSidebar === 'kubernetes' 
+                  ? 'Kubernetes'
+                  : menuItems[rightSidebar].label
+                }
+              </h3>
               <button 
                 className="close-sidebar"
                 onClick={() => setRightSidebar(null)}
@@ -136,15 +247,19 @@ const Dashboard = ({ onLogout }) => {
               </button>
             </div>
             <nav className="right-sidebar-nav">
-              {menuItems[rightSidebar].subItems.map((subItem, index) => (
-                <button
-                  key={index}
-                  className="right-nav-item"
-                  onClick={() => setActiveTab(`${rightSidebar}-${subItem}`)}
-                >
-                  {subItem}
-                </button>
-              ))}
+              {rightSidebar === 'kubernetes' ? (
+                <KubernetesSidebar onMenuClick={handleSidebarMenuClick} />
+              ) : (
+                menuItems[rightSidebar].subItems.map((subItem, index) => (
+                  <button
+                    key={index}
+                    className="right-nav-item"
+                    onClick={() => handleSidebarMenuClick(`${rightSidebar}-${subItem}`)}
+                  >
+                    {subItem}
+                  </button>
+                ))
+              )}
             </nav>
           </aside>
         )}
@@ -152,10 +267,10 @@ const Dashboard = ({ onLogout }) => {
         {/* Main Content */}
         <main className="main-content">
           <div className="content-header">
-            <h2>Cluster 2</h2>
+            <h2>{getContentTitle()}</h2>
           </div>
           <div className="content-body">
-            {renderTable()}
+            {renderContent()}
           </div>
         </main>
       </div>
