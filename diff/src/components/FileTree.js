@@ -28,13 +28,15 @@ const countStats = (diffText) => {
   return { additions, deletions };
 };
 
+// 더 예쁜 트리 구조를 위한 prefix 생성
 const getTreePrefix = (depth, isLast, parentLastArr) => {
   if (depth === 0) return '';
+  
   let prefix = '';
   for (let i = 0; i < depth - 1; i++) {
-    prefix += parentLastArr[i] ? '    ' : '|   ';
+    prefix += parentLastArr[i] ? '    ' : '│   ';
   }
-  prefix += isLast ? '└── ' : '|-- ';
+  prefix += isLast ? '└── ' : '├── ';
   return prefix;
 };
 
@@ -57,15 +59,34 @@ const TreeNode = ({ name, node, path, selectedPath, onSelect, openFolders, setOp
         className={
           'filetree-file' + (selectedPath === fullPath ? ' filetree-file--selected' : '')
         }
-        style={{ padding: `6px 24px 6px ${indent + 20}px`, fontFamily: 'monospace' }}
+        style={{ 
+          padding: `6px 24px 6px ${indent + 20}px`, 
+          fontFamily: 'Consolas, Monaco, "Courier New", monospace',
+          fontSize: '13px',
+          lineHeight: '1.4'
+        }}
         onClick={() => onSelect(fullPath)}
-        onMouseOver={e => e.currentTarget.style.background = '#f0f0f3'}
-        onMouseOut={e => e.currentTarget.style.background = selectedPath === fullPath ? '#f5f5f8' : 'transparent'}
+        onMouseOver={e => e.currentTarget.style.background = '#f8f9fa'}
+        onMouseOut={e => e.currentTarget.style.background = selectedPath === fullPath ? '#e3f2fd' : 'transparent'}
       >
-        <span style={{ marginRight: 6 }}>{prefix}📄</span>
-        <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
-        <span className="filetree-file__add">+{stats.additions}</span>
-        <span className="filetree-file__del">-{stats.deletions}</span>
+        <span style={{ 
+          marginRight: 8, 
+          color: '#666',
+          fontFamily: 'Consolas, Monaco, "Courier New", monospace'
+        }}>{prefix}</span>
+        <span style={{ 
+          marginRight: 6,
+          fontSize: '14px'
+        }}>📄</span>
+        <span style={{ 
+          flex: 1, 
+          whiteSpace: 'nowrap', 
+          overflow: 'hidden', 
+          textOverflow: 'ellipsis',
+          color: '#333'
+        }}>{name}</span>
+        <span className="filetree-file__add" style={{ marginLeft: 8 }}>+{stats.additions}</span>
+        <span className="filetree-file__del" style={{ marginLeft: 4 }}>-{stats.deletions}</span>
       </li>
     );
   }
@@ -76,14 +97,30 @@ const TreeNode = ({ name, node, path, selectedPath, onSelect, openFolders, setOp
     <li>
       <div
         className="filetree-folder"
-        style={{ padding: `6px 24px 6px ${indent}px`, fontFamily: 'monospace' }}
+        style={{ 
+          padding: `6px 24px 6px ${indent}px`, 
+          fontFamily: 'Consolas, Monaco, "Courier New", monospace',
+          fontSize: '13px',
+          lineHeight: '1.4',
+          cursor: 'pointer'
+        }}
         onClick={() => setOpenFolders(f => ({ ...f, [fullPath]: !isOpen }))}
+        onMouseOver={e => e.currentTarget.style.background = '#f8f9fa'}
+        onMouseOut={e => e.currentTarget.style.background = 'transparent'}
       >
-        <span className="filetree-folder__icon" style={{ marginRight: 6 }}>{getTreePrefix(depth || 0, isLast, parentLastArr)}{isOpen ? '📂' : '📁'}</span>
-        <span>{name}</span>
+        <span style={{ 
+          marginRight: 8,
+          color: '#666',
+          fontFamily: 'Consolas, Monaco, "Courier New", monospace'
+        }}>{prefix}</span>
+        <span style={{ 
+          marginRight: 6,
+          fontSize: '14px'
+        }}>{isOpen ? '📂' : '📁'}</span>
+        <span style={{ color: '#2c3e50', fontWeight: '500' }}>{name}</span>
       </div>
       {isOpen && (
-        <ul className="filetree-folder__children">
+        <ul className="filetree-folder__children" style={{ margin: 0, padding: 0 }}>
           {children.map((child, idx) => (
             <TreeNode
               key={child}
@@ -110,8 +147,19 @@ const FileTree = ({ diffs, selectedPath, onSelect }) => {
 
   return (
     <aside className="filetree-aside">
-      <div className="filetree-title">파일 목록</div>
-      <ul className="filetree-list">
+      <div className="filetree-title" style={{ 
+        padding: '12px 16px',
+        fontSize: '14px',
+        fontWeight: '600',
+        color: '#2c3e50',
+        borderBottom: '1px solid #e9ecef',
+        backgroundColor: '#f8f9fa'
+      }}>파일 목록</div>
+      <ul className="filetree-list" style={{ 
+        margin: 0, 
+        padding: '8px 0',
+        listStyle: 'none'
+      }}>
         {Object.keys(tree).sort().map(name => (
           <TreeNode
             key={name}
