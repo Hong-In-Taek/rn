@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: jwt-demo
+
+jwt:
+  secret: mySecretKey123456789012345678901234567890
+  expiration: 86400000  # 24시간 (밀리초)
+
+# 외부 인증 API 설정
+external:
+  auth:
+    url: http://localhost:8081/api/auth/validate  # 외부 인증 서버 URL
+
+# 기관 인증 API 설정
+institution:
+  auth:
+    url: http://localhost:8082/api/institution/validate  # 기관 인증 서버 URL
+
+logging:
+  level:
+    com.example.jwtdemo: DEBUG
+    org.springframework.security: DEBUG 

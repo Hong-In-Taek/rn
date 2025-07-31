@@ -9,6 +9,19 @@ const KanbanModal = ({ card, columnId, isOpen, onClose, onUpdate, users }) => {
   const [mentionText, setMentionText] = useState('');
   const assigneeInputRef = useRef(null);
 
+  // users가 배열인 경우 객체 형태로 변환
+  const processedUsers = Array.isArray(users) 
+    ? users.reduce((acc, userName, index) => {
+        acc[`user${index + 1}`] = {
+          id: `user${index + 1}`,
+          name: userName,
+          email: `${userName.toLowerCase()}@example.com`,
+          avatar: userName.charAt(0)
+        };
+        return acc;
+      }, {})
+    : users;
+
   useEffect(() => {
     if (card) {
       setEditedCard(card);
@@ -17,28 +30,28 @@ const KanbanModal = ({ card, columnId, isOpen, onClose, onUpdate, users }) => {
 
   const handleAssigneeChange = (e) => {
     const inputValue = e.target.value;
+    console.log('입력값:', inputValue);
     
-    // 현재 태그들 가져오기 (빈 태그 제외)
-    const currentTags = editedCard.assignee ? editedCard.assignee.split(' ').filter(part => part.startsWith('@') && part.length > 1) : [];
+    // 현재 등록된 사용자들 가져오기
+    const currentUsers = editedCard.users || [];
+    console.log('현재 사용자들:', currentUsers);
     
     // @ 기호가 포함되어 있는지 확인
     const atIndex = inputValue.lastIndexOf('@');
     if (atIndex !== -1) {
       const searchText = inputValue.substring(atIndex + 1);
       setMentionText(searchText);
-      
-      // 현재 등록된 사용자들 가져오기
-      const currentUserNames = editedCard.assignee ? 
-        editedCard.assignee.split(' ').filter(part => part.startsWith('@') && part.length > 1).map(part => part.substring(1)) : 
-        [];
+      console.log('검색 텍스트:', searchText);
       
       // 사용자 필터링 (이미 등록된 사용자 제외)
-      const filtered = Object.values(users).filter(user =>
-        !currentUserNames.includes(user.name) && (
+      const filtered = Object.values(processedUsers).filter(user =>
+        !currentUsers.includes(user.name) && (
           user.name.toLowerCase().includes(searchText.toLowerCase()) ||
           user.email.toLowerCase().includes(searchText.toLowerCase())
         )
       );
+      
+      console.log('필터링된 사용자들:', filtered);
       
       if (filtered.length > 0) {
         setFilteredUsers(filtered);
@@ -49,21 +62,18 @@ const KanbanModal = ({ card, columnId, isOpen, onClose, onUpdate, users }) => {
       }
     } else {
       setShowUserSuggestions(false);
+      setMentionText('');
     }
-    
-    // 태그와 입력값을 합쳐서 저장 (입력값이 있을 때만)
-    const newValue = inputValue.trim() ? [...currentTags, inputValue].join(' ').trim() : currentTags.join(' ');
-    setEditedCard({ ...editedCard, assignee: newValue });
-    onUpdate(columnId, card.id, { ...editedCard, assignee: newValue });
   };
 
   const selectUser = (user) => {
-    const currentTags = editedCard.assignee ? editedCard.assignee.split(' ').filter(part => part.startsWith('@') && part.length > 1) : [];
-    const newTags = [...currentTags, `@${user.name}`];
-    const newValue = newTags.join(' ');
+    console.log('사용자 선택됨:', user);
+    const currentUsers = editedCard.users || [];
+    const newUsers = [...currentUsers, user.name];
+    console.log('새 사용자 목록:', newUsers);
     
-    setEditedCard({ ...editedCard, assignee: newValue });
-    onUpdate(columnId, card.id, { ...editedCard, assignee: newValue });
+    setEditedCard({ ...editedCard, users: newUsers });
+    onUpdate(columnId, card.id, { ...editedCard, users: newUsers });
     setShowUserSuggestions(false);
     setMentionText('');
     
@@ -75,10 +85,10 @@ const KanbanModal = ({ card, columnId, isOpen, onClose, onUpdate, users }) => {
   };
 
   const removeAssignee = (userName) => {
-    const currentValue = editedCard.assignee || '';
-    const newValue = currentValue.replace(`@${userName}`, '').replace(/\s+/g, ' ').trim();
-    setEditedCard({ ...editedCard, assignee: newValue });
-    onUpdate(columnId, card.id, { ...editedCard, assignee: newValue });
+    const currentUsers = editedCard.users || [];
+    const newUsers = currentUsers.filter(user => user !== userName);
+    setEditedCard({ ...editedCard, users: newUsers });
+    onUpdate(columnId, card.id, { ...editedCard, users: newUsers });
   };
 
   const handleKeyDown = (e) => {
@@ -169,10 +179,10 @@ const KanbanModal = ({ card, columnId, isOpen, onClose, onUpdate, users }) => {
             <div className="modal-section">
               <label>담당자:</label>
               <div className="assignee-input-container">
-                {editedCard.assignee && editedCard.assignee.includes('@') ? (
+                {editedCard.users && editedCard.users.length > 0 ? (
                   <div className="assignee-tags-container">
-                    {editedCard.assignee.split(' ').filter(part => part.startsWith('@') && part.length > 1).map((assignee, index) => {
-                      const userName = assignee.substring(1);
+                    {editedCard.users.map((assignee, index) => {
+                      const userName = assignee;
                       return (
                         <div key={index} className="assignee-tag">
                           <div className="assignee-tag-content">
@@ -212,7 +222,7 @@ const KanbanModal = ({ card, columnId, isOpen, onClose, onUpdate, users }) => {
                   <input
                     ref={assigneeInputRef}
                     type="text"
-                    value={editedCard.assignee || ''}
+                    value=""
                     onChange={handleAssigneeChange}
                     onKeyDown={handleKeyDown}
                     onBlur={() => {
