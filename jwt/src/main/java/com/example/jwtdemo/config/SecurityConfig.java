@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // 기타 인증 필요 API
             .antMatchers("/api/private/**").authenticated()
             
-            // 모든 요청에 대해 인증 필요
+            // 모든 요청에 대해 인증 필요ed
             .anyRequest().authenticated()
             .and()
             .sessionManagement()
