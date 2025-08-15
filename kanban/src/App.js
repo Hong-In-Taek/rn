@@ -16,7 +16,7 @@ function App() {
           date: '2024-01-15',
           tags: ['기획', '문서'],
           stats: { views: 3, links: 2, comments: 0 },
-          assignee: '@김철수',
+          users: ['김철수'],
           comments: []
         },
         {
@@ -26,7 +26,7 @@ function App() {
           date: '2024-01-14',
           tags: ['디자인', '검토'],
           stats: { views: 5, links: 1, comments: 2 },
-          assignee: '@이영희',
+          users: ['이영희'],
           comments: [
             { id: 1, text: '디자인이 좋네요!', author: '박민수', date: '2024-01-14' },
             { id: 2, text: '색상 조정이 필요해 보입니다.', author: '김철수', date: '2024-01-14' }
@@ -45,7 +45,7 @@ function App() {
           date: '2024-01-13',
           tags: ['개발', 'React'],
           stats: { views: 8, links: 4, comments: 5 },
-          assignee: '@박민수',
+          users: ['박민수'],
           comments: [
             { id: 1, text: '컴포넌트 구조가 잘 설계되었습니다.', author: '이영희', date: '2024-01-13' }
           ]
@@ -57,7 +57,7 @@ function App() {
           date: '2024-01-12',
           tags: ['DB', '설계'],
           stats: { views: 6, links: 3, comments: 1 },
-          assignee: '@최지원',
+          users: ['최지원'],
           comments: []
         }
       ]
@@ -73,7 +73,7 @@ function App() {
           date: '2024-01-11',
           tags: ['코드', '리뷰'],
           stats: { views: 4, links: 2, comments: 3 },
-          assignee: '@김철수',
+          users: ['김철수'],
           comments: [
             { id: 1, text: '코드가 깔끔하게 작성되었습니다.', author: '박민수', date: '2024-01-11' },
             { id: 2, text: '성능 최적화가 필요해 보입니다.', author: '이영희', date: '2024-01-11' },
@@ -93,7 +93,7 @@ function App() {
           date: '2024-01-10',
           tags: ['배포', '완료'],
           stats: { views: 12, links: 6, comments: 8 },
-          assignee: '@최지원',
+          users: ['최지원'],
           comments: [
             { id: 1, text: '배포가 성공적으로 완료되었습니다!', author: '김철수', date: '2024-01-10' },
             { id: 2, text: '모니터링 설정도 잘 되어있네요.', author: '박민수', date: '2024-01-10' }
@@ -107,13 +107,7 @@ function App() {
   const [editingColumn, setEditingColumn] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [users, setUsers] = useState({
-    'user1': { id: 'user1', name: '김철수', email: 'kim@example.com', avatar: '김' },
-    'user2': { id: 'user2', name: '이영희', email: 'lee@example.com', avatar: '이' },
-    'user3': { id: 'user3', name: '박민수', email: 'park@example.com', avatar: '박' },
-    'user4': { id: 'user4', name: '최지원', email: 'choi@example.com', avatar: '최' },
-    'user5': { id: 'user5', name: '정수진', email: 'jung@example.com', avatar: '정' }
-  });
+  const [users, setUsers] = useState(['김철수', '홍인택', '이영희', '박민수', '최지원']);
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
@@ -164,7 +158,7 @@ function App() {
       date: new Date().toISOString().split('T')[0],
       tags: ['새'],
       stats: { views: 0, links: 0, comments: 0 },
-      assignee: '',
+      users: [],
       comments: []
     };
 
